@@ -46,8 +46,10 @@ item_categories = {
   magic_trinities_summons = 4,
 }
 message_cache = {
-  items = {}
+  items = {},
+  debug = { {} }
 }
+colourOffsetIterator = -8
 
 --- Addresses ---
 offset = 0x3A0606
@@ -1146,9 +1148,16 @@ function show_prompt(input_title, input_party, duration, colour)
     for z = 1, 3 do
         local _boxArray = input_party[z];
 
-        local colourOffset = get_colour_offset(colour or "red")
-        local _colorBox  = 0x018408A + 0x10 * colourOffset
-        local _colorText = 0x01840CA + 0x10 * colourOffset
+        local colourOffset;
+
+        if type(colour) == "string" then
+            colourOffset = get_colour_offset(colour) * 0x10
+        else
+            colourOffset = colour
+        end
+
+        local _colorBox  = 0x018408A + colourOffset
+        local _colorText = 0x01840CA + colourOffset
 
         if _boxArray then
             local _textAddress = (_textMemory + 0x70) + (0x140 * (z - 1)) + (0x40 * 0)
@@ -1196,6 +1205,16 @@ function handle_messages()
   if item ~= nil then
     show_prompt_for_item(item)
     table.remove(message_cache.items, 1)
+    return
+  end
+
+
+  local debugmsg = message_cache.debug[1]
+  if debugmsg ~= nil then
+    show_prompt({ 'debug' }, {{'Colouroffset: ' .. tostring(colourOffsetIterator)}}, null, colourOffsetIterator)
+    -- table.remove(message_cache.debug, 1) -- show forever
+    colourOffsetIterator = colourOffsetIterator + 4
+    return
   end
 
 end
