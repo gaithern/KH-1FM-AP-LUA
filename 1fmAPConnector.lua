@@ -47,7 +47,9 @@ item_categories = {
 }
 message_cache = {
   items = {},
-  debug = { {} }
+  sent  = {},
+  debug = { {} },
+  sentIDs = {},
 }
 colourOffsetIterator = -8
 
@@ -826,6 +828,24 @@ function receive_items()
     write_check_array(check_array)
 end
 
+function receive_sent_msgs()
+  for i = 0, 5 do
+    local filename = client_communication_path .. "sent" .. tostring(i)
+    if file_exists(filename) then
+      local lines = {}
+      local file = io.open(filename, "r")
+      local line = file:read("*line")
+      while line do
+        table.insert(lines, line)
+        line = file:read("*line")
+      end
+      file:close()
+
+      table.insert(message_cache.sent, lines)
+    end
+  end
+end
+
 function calculate_full()
     magic_unlocked_bits = {0, 0, 0, 0, 0, 0, 0}
     magic_levels_array  = {0, 0, 0, 0, 0, 0, 0}
@@ -1200,26 +1220,51 @@ function show_prompt(input_title, input_party, duration, colour)
 end
 
 function handle_messages()
-  local item = message_cache.items[1]
 
-  if item ~= nil then
-    show_prompt_for_item(item)
+  local msg = message_cache.items[1]
+  if msg ~= nil then
+    show_prompt_for_item(msg)
     table.remove(message_cache.items, 1)
     return
   end
 
 
-  local debugmsg = message_cache.debug[1]
-  if debugmsg ~= nil then
-    show_prompt({ 'debug' }, {{'Colouroffset: ' .. tostring(colourOffsetIterator)}}, null, colourOffsetIterator)
-    -- table.remove(message_cache.debug, 1) -- show forever
-    colourOffsetIterator = colourOffsetIterator + 4
-    return
+
+  local newSents =  {}
+  for i = 1, #message_cache.sent do
+    if not message_cache.sentIDs[message_cache.sent[i][4]] then
+      table.insert(newSents, message_cache.sent[i])
+    end
   end
+
+  msg = newSents[1]
+  if msg ~= nil then
+    if not message_cache.sentIDs[msg[4]] then
+      message_cache.sentIDs[msg[4]] = true
+
+      local info = {
+        item = msg[1],
+        reciver = msg[2],
+        category = msg[3],
+      }
+
+      show_prompt({ msg[2] }, {{ msg[1]}}, null, 36)
+      return
+    end
+  end
+
+  -- local debugmsg = message_cache.debug[1]
+  -- if debugmsg ~= nil then
+  --   show_prompt({ 'debug' }, {{'Colouroffset: ' .. tostring(colourOffsetIterator)}}, null, colourOffsetIterator)
+  --   -- table.remove(message_cache.debug, 1) -- show forever
+  --   colourOffsetIterator = colourOffsetIterator + 4
+  --   return
+  -- end
 
 end
 
 function main()
+    receive_sent_msgs()
     receive_items()
     victory = calculate_full()
     send_locations(victory)
