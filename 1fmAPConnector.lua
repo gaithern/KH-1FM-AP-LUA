@@ -1124,6 +1124,20 @@ function GetKHSCII(INPUT)
     return _returnArray
 end
 
+function usefulness_to_colour(usefulness)
+  if usefulness == item_usefulness.useless then
+    return prompt_colours.green_mint
+  elseif usefulness == item_usefulness.normal then
+    return prompt_colours.red_sora
+  elseif usefulness == item_usefulness.progression then
+    return prompt_colours.purple_evil
+  elseif usefulness == item_usefulness.special then
+    return prompt_colours.red_rose
+  elseif usefulness == item_usefulness.trap then
+    return prompt_colours.red_trap
+  end
+end
+
 
 function show_prompt_for_item(item)
   local text_1 = ""
@@ -1191,17 +1205,8 @@ function show_prompt_for_item(item)
     item.Usefulness = catUsefulness
   end
 
-  if item.Usefulness == item_usefulness.useless then
-    colour = prompt_colours.green_mint
-  elseif item.Usefulness == item_usefulness.normal then
-    colour = prompt_colours.red_sora
-  elseif item.Usefulness == item_usefulness.progression then
-    colour = prompt_colours.purple_evil
-  elseif item.Usefulness == item_usefulness.special then
-    colour = prompt_colours.red_rose
-  elseif item.Usefulness == item_usefulness.trap then
-    colour = prompt_colours.red_trap
-  end
+  colour = usefulness_to_colour(item.Usefulness)
+
 
   show_prompt({ text_1 }, text_2, null, colour)
 end
@@ -1288,7 +1293,7 @@ function handle_messages()
       local info = {
         item = msg[1],
         reciver = msg[2],
-        Usefulness = msg[3],
+        usefulness = math.tointeger(msg[3]),
       }
 
       --Link's Ocarina
@@ -1298,10 +1303,24 @@ function handle_messages()
       else
         item_msg = item_msg .. "'s"
       end
-
       item_msg = item_msg .. ' ' .. info.item
 
-      show_prompt({ "Multiworld" }, { { item_msg } }, null)
+      local usefulness;
+
+      if info.usefulness == 0 then
+        usefulness = item_usefulness.useless
+      elseif info.usefulness == 1 then
+        usefulness = item_usefulness.progression
+      elseif info.usefulness == 2 then
+        usefulness = item_usefulness.normal
+      elseif info.usefulness == 3 then
+        usefulness = item_usefulness.trap
+      end
+
+      ConsolePrint('use multiwork ' .. info.usefulness)
+      local colour = usefulness_to_colour(usefulness)
+
+      show_prompt({ "Multiworld" }, { { item_msg } }, null, colour)
       return
     end
 
