@@ -868,7 +868,10 @@ function receive_sent_msgs()
       end
       file:close()
 
-      table.insert(message_cache.sent, lines)
+      if message_cache.sentIDs[lines[4]] == nil then
+        table.insert(message_cache.sent, lines)
+      end
+
     end
   end
 end
@@ -1227,8 +1230,6 @@ function handle_messages()
     return
   end
 
-
-
   local newSents = {}
   for i = 1, #message_cache.sent do
     if not message_cache.sentIDs[message_cache.sent[i][4]] then
@@ -1236,21 +1237,20 @@ function handle_messages()
     end
   end
 
+
   msg = newSents[1]
   if msg ~= nil then
-    if not message_cache.sentIDs[msg[4]] then
+    if message_cache.sentIDs[msg[4]] == nil then
       message_cache.sentIDs[msg[4]] = true
 
       local info = {
         item = msg[1],
         reciver = msg[2],
-        category = msg[3],
+        Usefulness = msg[3],
       }
 
       --Link's Ocarina
       local item_msg = tostring(info.reciver);
-
-      --last char is 's
       if (string.sub(item_msg, -1) == 's') then
         item_msg = item_msg .. "'"
       else
