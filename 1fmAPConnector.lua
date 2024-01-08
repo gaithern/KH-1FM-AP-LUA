@@ -46,6 +46,8 @@ item_categories = {
   magic = 4,
   trinity = 5,
   summon = 6,
+  statsUp = 7,
+  synthesis = 8,
 }
 message_cache = {
   items = {},
@@ -68,6 +70,7 @@ prompt_colours = {
   purple_pink_intensiv = 36,
   blue_light_intensiv = 40,
   red_rose = 64,
+  red_trap = 140
 }
 
 item_usefulness = {
@@ -89,16 +92,16 @@ offset = 0x3A0606
 function define_items()
   items = {
 
-    --Consumables
-  { ID = 2640000, Name = "Victory", Usefulness = item_usefulness.progression },
-  { ID = 2641001, Name = "Potion" },
-  { ID = 2641002, Name = "Hi-Potion" },
-  { ID = 2641003, Name = "Ether" },
-  { ID = 2641004, Name = "Elixir" },
+  --Consumables
+  { ID = 2640000, Name = "Victory", Usefulness = item_usefulness.special },
+  { ID = 2641001, Name = "Potion", },
+  { ID = 2641002, Name = "Hi-Potion", },
+  { ID = 2641003, Name = "Ether", },
+  { ID = 2641004, Name = "Elixir", },
   { ID = 2641005, Name = "BO5" },
-  { ID = 2641006, Name = "Mega-Potion" },
-  { ID = 2641007, Name = "Mega-Ether" },
-  { ID = 2641008, Name = "Megalixir" },
+  { ID = 2641006, Name = "Mega-Potion", },
+  { ID = 2641007, Name = "Mega-Ether", },
+  { ID = 2641008, Name = "Megalixir", },
 
   --Synthesis
   { ID = 2641009, Name = "Fury Stone" },
@@ -1130,35 +1133,74 @@ function show_prompt_for_item(item)
   local smallId = item.ID - 2640000
 
   if smallId > 1000 and smallId < 1009 then
-    category = item_categories.consumables
+    category = item_categories.consumable
+  elseif smallId > 1008 and smallId < 1017 then
+    category = item_categories.synthesis
   elseif smallId > 1016 and smallId < 1136 then
     category = item_categories.equipment
   elseif smallId > 2000 and smallId < 4001 then
-    category = item_categories.abilities
+    category = item_categories.ability
   elseif smallId > 4000 and smallId < 5000 then
-    category = item_categories.consumables
-  elseif smallId > 4999 and smallId < 7000 then
-    category = item_categories.magic_trinities_summons
+    category = item_categories.statsUp
+  elseif smallId > 5000 and smallId < 6000 then
+    category = item_categories.summon
+  elseif smallId > 6000 and smallId < 7000 then
+    category = item_categories.magic
   elseif smallId > 8000 and smallId < 9000 then
-    category = item_categories.magic_trinities_summons
-  elseif smallId > 7000  and smallId < 10000 then
-    category = item_categories.unlocks
+    category = item_categories.trinity
+  elseif smallId > 5000 and smallId < 6000 then
+    category = item_categories.summon
+  elseif smallId > 7000 and smallId < 10000 then
+    category = item_categories.unlock
+  end
+
+  local catUsefulness = item_usefulness.useless
+
+  if category == item_categories.consumable then
+    text_1 = "Consumable"
+    catUsefulness = item_usefulness.useless
+  elseif category == item_categories.synthesis then
+    text_1 = "Synthesis"
+    catUsefulness = item_usefulness.useless
+  elseif category == item_categories.equipment then
+    text_1 = "Equipment"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.ability then
+    text_1 = "Ability"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.statsUp then
+    text_1 = "Stat Up"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.summon then
+    text_1 = "Summon"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.magic then
+    text_1 = "Magic"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.trinity then
+    text_1 = "Trinity"
+    catUsefulness = item_usefulness.progression
+  elseif category == item_categories.unlock then
+    text_1 = "Unlock"
+    catUsefulness = item_usefulness.progression
   end
 
   local colour = prompt_colours.red_sora;
-  if item.Progression then
-    colour = prompt_colours.purple_evil
+
+  if item.Usefulness == nil then
+    item.Usefulness = catUsefulness
   end
 
-  if category == item_categories.equipment then
-    text_1 = "Equipment"
-  elseif category == item_categories.consumables then
-
-  elseif category == item_categories.unlocks then
-    text_1 = "Unlock"
-  elseif category == item_categories.abilities then
-    text_1 = "Ability"
-  elseif category == item_categories.magic_trinities_summons then
+  if item.Usefulness == item_usefulness.useless then
+    colour = prompt_colours.green_mint
+  elseif item.Usefulness == item_usefulness.normal then
+    colour = prompt_colours.red_sora
+  elseif item.Usefulness == item_usefulness.progression then
+    colour = prompt_colours.purple_evil
+  elseif item.Usefulness == item_usefulness.special then
+    colour = prompt_colours.red_rose
+  elseif item.Usefulness == item_usefulness.trap then
+    colour = prompt_colours.red_trap
   end
 
   show_prompt({ text_1 }, text_2, null, colour)
@@ -1259,7 +1301,7 @@ function handle_messages()
 
       item_msg = item_msg .. ' ' .. info.item
 
-      show_prompt({ "Multiworld" }, { { item_msg } }, null, 36)
+      show_prompt({ "Multiworld" }, { { item_msg } }, null)
       return
     end
 
