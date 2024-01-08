@@ -40,10 +40,12 @@ worlds_unlocked_array = {3, 0, 0, 0, 0, 0, 0, 0, 0}
 monstro_unlocked = 0
 item_categories = {
   equipment = 0,
-  consumables = 1,
-  unlocks = 2,
-  abilities = 3,
-  magic_trinities_summons = 4,
+  consumable = 1,
+  unlock = 2,
+  ability = 3,
+  magic = 4,
+  trinity = 5,
+  summon = 6,
 }
 message_cache = {
   items = {},
@@ -51,6 +53,31 @@ message_cache = {
   debug = { {} },
   sentIDs = {},
 }
+prompt_colours = {
+  blue_donald = -8,
+  green_goofy = -4,
+  red_sora = 0,
+  purple_evil = 4,
+  green_goofy_dark = 8,
+  purple_pink = 12,
+  blue_light = 16,
+  green_mint = 20,
+  orange = 24,
+  violet = 28,
+  green_goofy_intensiv = 32,
+  purple_pink_intensiv = 36,
+  blue_light_intensiv = 40,
+  red_rose = 64,
+}
+
+item_usefulness = {
+  trap = 0,
+  useless = 1,
+  normal = 2,
+  progression = 3,
+  special = 4,
+}
+
 colourOffsetIterator = -8
 
 --- Addresses ---
@@ -63,7 +90,7 @@ function define_items()
   items = {
 
     --Consumables
-  { ID = 2640000, Name = "Victory", Progression = true },
+  { ID = 2640000, Name = "Victory", Usefulness = item_usefulness.progression },
   { ID = 2641001, Name = "Potion" },
   { ID = 2641002, Name = "Hi-Potion" },
   { ID = 2641003, Name = "Ether" },
@@ -256,10 +283,10 @@ function define_items()
   { ID = 2641185, Name = "Hafet Vol. 4" },
   { ID = 2641186, Name = "Empty Bottle" },
   { ID = 2641187, Name = "Old Book" },
-  { ID = 2641188, Name = "Emblem Piece (Flame)",    Progression = true },
-  { ID = 2641189, Name = "Emblem Piece (Chest)",    Progression = true },
-  { ID = 2641190, Name = "Emblem Piece (Statue)",   Progression = true },
-  { ID = 2641191, Name = "Emblem Piece (Fountain)", Progression = true },
+  { ID = 2641188, Name = "Emblem Piece (Flame)",    Usefulness = item_usefulness.progression },
+  { ID = 2641189, Name = "Emblem Piece (Chest)",    Usefulness = item_usefulness.progression },
+  { ID = 2641190, Name = "Emblem Piece (Statue)",   Usefulness = item_usefulness.progression },
+  { ID = 2641191, Name = "Emblem Piece (Fountain)", Usefulness = item_usefulness.progression },
   { ID = 2641192, Name = "Log" },
   { ID = 2641193, Name = "Cloth" },
   { ID = 2641194, Name = "Rope" },
@@ -285,18 +312,18 @@ function define_items()
   { ID = 2641214, Name = "Torn Page 3" },
   { ID = 2641215, Name = "Torn Page 4" },
   { ID = 2641216, Name = "Torn Page 5" },
-  { ID = 2641217, Name = "Slide 1", Progression = true },
+  { ID = 2641217, Name = "Slide 1", Usefulness = item_usefulness.progression },
   { ID = 2641218, Name = "Slide 2" },
   { ID = 2641219, Name = "Slide 3" },
   { ID = 2641220, Name = "Slide 4" },
   { ID = 2641221, Name = "Slide 5" },
   { ID = 2641222, Name = "Slide 6" },
-  { ID = 2641223, Name = "Footprints", Progression = true },
+  { ID = 2641223, Name = "Footprints", Usefulness = item_usefulness.progression },
   { ID = 2641224, Name = "Claw Marks" },
   { ID = 2641225, Name = "Stench" },
   { ID = 2641226, Name = "Antenna" },
   { ID = 2641227, Name = "Forget-Me-Not" },
-  { ID = 2641228, Name = "Jack-In-The-Box", Progression = true },
+  { ID = 2641228, Name = "Jack-In-The-Box", Usefulness = item_usefulness.progression },
   { ID = 2641229, Name = "Entry Pass" },
   { ID = 2641230, Name = "Hero License" },
   { ID = 2641231, Name = "Pretty Stone" },
@@ -326,10 +353,10 @@ function define_items()
   { ID = 2641255, Name = "Orichalcum" },
 
   -- Abilities
-  { ID = 2642001, Name = "High Jump",    Progression = true },
-  { ID = 2642002, Name = "Mermaid Kick", Progression = true },
-  { ID = 2642003, Name = "Glide",        Progression = true },
-  { ID = 2642004, Name = "Superglide",   Progression = true },
+  { ID = 2642001, Name = "High Jump",    Usefulness = item_usefulness.progression },
+  { ID = 2642002, Name = "Mermaid Kick", Usefulness = item_usefulness.progression },
+  { ID = 2642003, Name = "Glide",        Usefulness = item_usefulness.progression },
+  { ID = 2642004, Name = "Superglide",   Usefulness = item_usefulness.progression },
   { ID = 2643005, Name = "Treasure Magnet" },
   { ID = 2643006, Name = "Combo Plus" },
   { ID = 2643007, Name = "Air Combo Plus" },
@@ -410,38 +437,38 @@ function define_items()
   { ID = 2645005, Name = "Simba" },
 
   --Magic
-  { ID = 2646001, Name = "Progressive Fire",     Progression = true },
-  { ID = 2646002, Name = "Progressive Blizzard", Progression = true },
-  { ID = 2646003, Name = "Progressive Thunder",  Progression = true },
-  { ID = 2646004, Name = "Progressive Cure",     Progression = true },
-  { ID = 2646005, Name = "Progressive Gravity",  Progression = true },
-  { ID = 2646006, Name = "Progressive Stop",     Progression = true },
-  { ID = 2646007, Name = "Progressive Aero",     Progression = true },
+  { ID = 2646001, Name = "Progressive Fire",     Usefulness = item_usefulness.progression },
+  { ID = 2646002, Name = "Progressive Blizzard", Usefulness = item_usefulness.progression },
+  { ID = 2646003, Name = "Progressive Thunder",  Usefulness = item_usefulness.progression },
+  { ID = 2646004, Name = "Progressive Cure",     Usefulness = item_usefulness.progression },
+  { ID = 2646005, Name = "Progressive Gravity",  Usefulness = item_usefulness.progression },
+  { ID = 2646006, Name = "Progressive Stop",     Usefulness = item_usefulness.progression },
+  { ID = 2646007, Name = "Progressive Aero",     Usefulness = item_usefulness.progression },
 
   --World unlocks
-  { ID = 2647002, Name = "Wonderland",       Progression = true },
-  { ID = 2647003, Name = "Olympus Coliseum", Progression = true },
-  { ID = 2647004, Name = "Deep Jungle",      Progression = true },
-  { ID = 2647005, Name = "Agrabah",          Progression = true },
-  { ID = 2647006, Name = "Halloween Town",   Progression = true },
-  { ID = 2647007, Name = "Atlantica",        Progression = true },
-  { ID = 2647008, Name = "Neverland",        Progression = true },
-  { ID = 2647009, Name = "Hollow Bastion",   Progression = true },
-  { ID = 2647010, Name = "End of the World", Progression = true },
-  { ID = 2647011, Name = "Monstro",          Progression = true },
+  { ID = 2647002, Name = "Wonderland",       Usefulness = item_usefulness.progression },
+  { ID = 2647003, Name = "Olympus Coliseum", Usefulness = item_usefulness.progression },
+  { ID = 2647004, Name = "Deep Jungle",      Usefulness = item_usefulness.progression },
+  { ID = 2647005, Name = "Agrabah",          Usefulness = item_usefulness.progression },
+  { ID = 2647006, Name = "Halloween Town",   Usefulness = item_usefulness.progression },
+  { ID = 2647007, Name = "Atlantica",        Usefulness = item_usefulness.progression },
+  { ID = 2647008, Name = "Neverland",        Usefulness = item_usefulness.progression },
+  { ID = 2647009, Name = "Hollow Bastion",   Usefulness = item_usefulness.progression },
+  { ID = 2647010, Name = "End of the World", Usefulness = item_usefulness.progression },
+  { ID = 2647011, Name = "Monstro",          Usefulness = item_usefulness.progression },
 
   --Trinities
-  { ID = 2648001, Name = "Blue Trinity",   Progression = true },
-  { ID = 2648002, Name = "Red Trinity",    Progression = true },
-  { ID = 2648003, Name = "Green Trinity",  Progression = true },
-  { ID = 2648004, Name = "Yellow Trinity", Progression = true },
-  { ID = 2648005, Name = "White Trinity",  Progression = true },
+  { ID = 2648001, Name = "Blue Trinity",   Usefulness = item_usefulness.progression },
+  { ID = 2648002, Name = "Red Trinity",    Usefulness = item_usefulness.progression },
+  { ID = 2648003, Name = "Green Trinity",  Usefulness = item_usefulness.progression },
+  { ID = 2648004, Name = "Yellow Trinity", Usefulness = item_usefulness.progression },
+  { ID = 2648005, Name = "White Trinity",  Usefulness = item_usefulness.progression },
 
   --Cups
-  { ID = 2649001, Name = "Phil Cup",     Progression = true },
-  { ID = 2649002, Name = "Pegasus Cup",  Progression = true },
-  { ID = 2649003, Name = "Hercules Cup", Progression = true },
-  { ID = 2649004, Name = "Hades Cup",    Progression = true },
+  { ID = 2649001, Name = "Phil Cup",     Usefulness = item_usefulness.progression },
+  { ID = 2649002, Name = "Pegasus Cup",  Usefulness = item_usefulness.progression },
+  { ID = 2649003, Name = "Hercules Cup", Usefulness = item_usefulness.progression },
+  { ID = 2649004, Name = "Hades Cup",    Usefulness = item_usefulness.progression },
 }
     return items
 end
@@ -1091,20 +1118,6 @@ function GetKHSCII(INPUT)
     return _returnArray
 end
 
-function get_colour_offset(colour_name)
-  if       colour_name == "red"         then return 0
-    elseif colour_name == "blue"        then return 1
-    elseif colour_name == "green"       then return 2
-    elseif colour_name == "orange"      then return 3
-    elseif colour_name == "lightred"    then return 4
-    elseif colour_name == "lightblue"   then return 5
-    elseif colour_name == "lightgreen"  then return 6
-    elseif colour_name == "lightorange" then return 7
-    elseif colour_name == "white"       then return 8
-    elseif colour_name == "black"       then return 9
-    else return 0
-  end
-end
 
 function show_prompt_for_item(item)
   local text_1 = ""
@@ -1129,25 +1142,20 @@ function show_prompt_for_item(item)
     category = item_categories.unlocks
   end
 
-  local colour = "red";
+  local colour = prompt_colours.red_sora;
   if item.Progression then
-    colour = "black"
+    colour = prompt_colours.purple_evil
   end
 
-  --maybe colours when colours are beautiful
   if category == item_categories.equipment then
-    -- colour = "red"
-    text_1 = "New Equipment"
+    text_1 = "Equipment"
   elseif category == item_categories.consumables then
-    -- colour = "green"
+
   elseif category == item_categories.unlocks then
-    -- colour = "black"
-    text_1 = "Now Accessible"
+    text_1 = "Unlock"
   elseif category == item_categories.abilities then
-    -- colour = "orange"
-    text_1 = "Learned Ability"
+    text_1 = "Ability"
   elseif category == item_categories.magic_trinities_summons then
-    -- colour = "blue"
   end
 
   show_prompt({ text_1 }, text_2, null, colour)
@@ -1168,16 +1176,8 @@ function show_prompt(input_title, input_party, duration, colour)
     for z = 1, 3 do
         local _boxArray = input_party[z];
 
-        local colourOffset;
-
-        if type(colour) == "string" then
-            colourOffset = get_colour_offset(colour) * 0x10
-        else
-            colourOffset = colour
-        end
-
-        local _colorBox  = 0x018408A + colourOffset
-        local _colorText = 0x01840CA + colourOffset
+        local _colorBox  = 0x018408A + colour
+        local _colorText = 0x01840CA + colour
 
         if _boxArray then
             local _textAddress = (_textMemory + 0x70) + (0x140 * (z - 1)) + (0x40 * 0)
@@ -1220,7 +1220,6 @@ function show_prompt(input_title, input_party, duration, colour)
 end
 
 function handle_messages()
-
   local msg = message_cache.items[1]
   if msg ~= nil then
     show_prompt_for_item(msg)
@@ -1230,7 +1229,7 @@ function handle_messages()
 
 
 
-  local newSents =  {}
+  local newSents = {}
   for i = 1, #message_cache.sent do
     if not message_cache.sentIDs[message_cache.sent[i][4]] then
       table.insert(newSents, message_cache.sent[i])
@@ -1248,19 +1247,31 @@ function handle_messages()
         category = msg[3],
       }
 
-      show_prompt({ msg[2] }, {{ msg[1]}}, null, 36)
+      --Link's Ocarina
+      local item_msg = tostring(info.reciver);
+
+      --last char is 's
+      if (string.sub(item_msg, -1) == 's') then
+        item_msg = item_msg .. "'"
+      else
+        item_msg = item_msg .. "'s"
+      end
+
+      item_msg = item_msg .. ' ' .. info.item
+
+      show_prompt({ "Multiworld" }, { { item_msg } }, null, 36)
       return
     end
+
+    -- local debugmsg = message_cache.debug[1]
+    -- if debugmsg ~= nil then
+    --   show_prompt({ 'debug' }, {{'Colouroffset: ' .. tostring(colourOffsetIterator)}}, null, colourOffsetIterator)
+    --   -- table.remove(message_cache.debug, 1) -- show forever
+    --   colourOffsetIterator = colourOffsetIterator + 4
+    --   return
+    -- end
+    --
   end
-
-  -- local debugmsg = message_cache.debug[1]
-  -- if debugmsg ~= nil then
-  --   show_prompt({ 'debug' }, {{'Colouroffset: ' .. tostring(colourOffsetIterator)}}, null, colourOffsetIterator)
-  --   -- table.remove(message_cache.debug, 1) -- show forever
-  --   colourOffsetIterator = colourOffsetIterator + 4
-  --   return
-  -- end
-
 end
 
 function main()
