@@ -42,14 +42,48 @@ magic_unlocked_bits = {0, 0, 0, 0, 0, 0, 0}
 initializing = true
 item_categories = {
   equipment = 0,
-  consumables = 1,
-  unlocks = 2,
-  abilities = 3,
-  magic_trinities_summons = 4,
+  consumable = 1,
+  unlock = 2,
+  ability = 3,
+  magic = 4,
+  trinity = 5,
+  summon = 6,
+  statsUp = 7,
+  synthesis = 8,
 }
 message_cache = {
-  items = {}
+  items = {},
+  sent  = {},
+  debug = { {} },
+  sentIDs = {},
 }
+prompt_colours = {
+  blue_donald = -8,
+  green_goofy = -4,
+  red_sora = 0,
+  purple_evil = 4,
+  green_goofy_dark = 8,
+  purple_pink = 12,
+  blue_light = 16,
+  green_mint = 20,
+  orange = 24,
+  violet = 28,
+  green_goofy_intensiv = 32,
+  purple_pink_intensiv = 36,
+  blue_light_intensiv = 40,
+  red_rose = 64,
+  red_trap = 140
+}
+
+item_usefulness = {
+  trap = 0,
+  useless = 1,
+  normal = 2,
+  progression = 3,
+  special = 4,
+}
+
+colourOffsetIterator = -8
 
 --- Addresses ---
 offset = 0x3A0606
@@ -60,16 +94,16 @@ offset = 0x3A0606
 function define_items()
   items = {
 
-    --Consumables
-  { ID = 2640000, Name = "Victory", Progression = true },
-  { ID = 2641001, Name = "Potion" },
-  { ID = 2641002, Name = "Hi-Potion" },
-  { ID = 2641003, Name = "Ether" },
-  { ID = 2641004, Name = "Elixir" },
+  --Consumables
+  { ID = 2640000, Name = "Victory", Usefulness = item_usefulness.special },
+  { ID = 2641001, Name = "Potion", },
+  { ID = 2641002, Name = "Hi-Potion", },
+  { ID = 2641003, Name = "Ether", },
+  { ID = 2641004, Name = "Elixir", },
   { ID = 2641005, Name = "BO5" },
-  { ID = 2641006, Name = "Mega-Potion" },
-  { ID = 2641007, Name = "Mega-Ether" },
-  { ID = 2641008, Name = "Megalixir" },
+  { ID = 2641006, Name = "Mega-Potion", },
+  { ID = 2641007, Name = "Mega-Ether", },
+  { ID = 2641008, Name = "Megalixir", },
 
   --Synthesis
   { ID = 2641009, Name = "Fury Stone" },
@@ -254,10 +288,10 @@ function define_items()
   { ID = 2641185, Name = "Hafet Vol. 4" },
   { ID = 2641186, Name = "Empty Bottle" },
   { ID = 2641187, Name = "Old Book" },
-  { ID = 2641188, Name = "Emblem Piece (Flame)",    Progression = true },
-  { ID = 2641189, Name = "Emblem Piece (Chest)",    Progression = true },
-  { ID = 2641190, Name = "Emblem Piece (Statue)",   Progression = true },
-  { ID = 2641191, Name = "Emblem Piece (Fountain)", Progression = true },
+  { ID = 2641188, Name = "Emblem Piece (Flame)",    Usefulness = item_usefulness.progression },
+  { ID = 2641189, Name = "Emblem Piece (Chest)",    Usefulness = item_usefulness.progression },
+  { ID = 2641190, Name = "Emblem Piece (Statue)",   Usefulness = item_usefulness.progression },
+  { ID = 2641191, Name = "Emblem Piece (Fountain)", Usefulness = item_usefulness.progression },
   { ID = 2641192, Name = "Log" },
   { ID = 2641193, Name = "Cloth" },
   { ID = 2641194, Name = "Rope" },
@@ -283,18 +317,18 @@ function define_items()
   { ID = 2641214, Name = "Torn Page 3" },
   { ID = 2641215, Name = "Torn Page 4" },
   { ID = 2641216, Name = "Torn Page 5" },
-  { ID = 2641217, Name = "Slide 1", Progression = true },
+  { ID = 2641217, Name = "Slide 1", Usefulness = item_usefulness.progression },
   { ID = 2641218, Name = "Slide 2" },
   { ID = 2641219, Name = "Slide 3" },
   { ID = 2641220, Name = "Slide 4" },
   { ID = 2641221, Name = "Slide 5" },
   { ID = 2641222, Name = "Slide 6" },
-  { ID = 2641223, Name = "Footprints", Progression = true },
+  { ID = 2641223, Name = "Footprints", Usefulness = item_usefulness.progression },
   { ID = 2641224, Name = "Claw Marks" },
   { ID = 2641225, Name = "Stench" },
   { ID = 2641226, Name = "Antenna" },
   { ID = 2641227, Name = "Forget-Me-Not" },
-  { ID = 2641228, Name = "Jack-In-The-Box", Progression = true },
+  { ID = 2641228, Name = "Jack-In-The-Box", Usefulness = item_usefulness.progression },
   { ID = 2641229, Name = "Entry Pass" },
   { ID = 2641230, Name = "Hero License" },
   { ID = 2641231, Name = "Pretty Stone" },
@@ -324,10 +358,10 @@ function define_items()
   { ID = 2641255, Name = "Orichalcum" },
 
   -- Abilities
-  { ID = 2642001, Name = "High Jump",    Progression = true },
-  { ID = 2642002, Name = "Mermaid Kick", Progression = true },
-  { ID = 2642003, Name = "Glide",        Progression = true },
-  { ID = 2642004, Name = "Superglide",   Progression = true },
+  { ID = 2642001, Name = "High Jump",    Usefulness = item_usefulness.progression },
+  { ID = 2642002, Name = "Mermaid Kick", Usefulness = item_usefulness.progression },
+  { ID = 2642003, Name = "Glide",        Usefulness = item_usefulness.progression },
+  { ID = 2642004, Name = "Superglide",   Usefulness = item_usefulness.progression },
   { ID = 2643005, Name = "Treasure Magnet" },
   { ID = 2643006, Name = "Combo Plus" },
   { ID = 2643007, Name = "Air Combo Plus" },
@@ -408,38 +442,38 @@ function define_items()
   { ID = 2645005, Name = "Simba" },
 
   --Magic
-  { ID = 2646001, Name = "Progressive Fire",     Progression = true },
-  { ID = 2646002, Name = "Progressive Blizzard", Progression = true },
-  { ID = 2646003, Name = "Progressive Thunder",  Progression = true },
-  { ID = 2646004, Name = "Progressive Cure",     Progression = true },
-  { ID = 2646005, Name = "Progressive Gravity",  Progression = true },
-  { ID = 2646006, Name = "Progressive Stop",     Progression = true },
-  { ID = 2646007, Name = "Progressive Aero",     Progression = true },
+  { ID = 2646001, Name = "Progressive Fire",     Usefulness = item_usefulness.progression },
+  { ID = 2646002, Name = "Progressive Blizzard", Usefulness = item_usefulness.progression },
+  { ID = 2646003, Name = "Progressive Thunder",  Usefulness = item_usefulness.progression },
+  { ID = 2646004, Name = "Progressive Cure",     Usefulness = item_usefulness.progression },
+  { ID = 2646005, Name = "Progressive Gravity",  Usefulness = item_usefulness.progression },
+  { ID = 2646006, Name = "Progressive Stop",     Usefulness = item_usefulness.progression },
+  { ID = 2646007, Name = "Progressive Aero",     Usefulness = item_usefulness.progression },
 
   --World unlocks
-  { ID = 2647002, Name = "Wonderland",       Progression = true },
-  { ID = 2647003, Name = "Olympus Coliseum", Progression = true },
-  { ID = 2647004, Name = "Deep Jungle",      Progression = true },
-  { ID = 2647005, Name = "Agrabah",          Progression = true },
-  { ID = 2647006, Name = "Halloween Town",   Progression = true },
-  { ID = 2647007, Name = "Atlantica",        Progression = true },
-  { ID = 2647008, Name = "Neverland",        Progression = true },
-  { ID = 2647009, Name = "Hollow Bastion",   Progression = true },
-  { ID = 2647010, Name = "End of the World", Progression = true },
-  { ID = 2647011, Name = "Monstro",          Progression = true },
+  { ID = 2647002, Name = "Wonderland",       Usefulness = item_usefulness.progression },
+  { ID = 2647003, Name = "Olympus Coliseum", Usefulness = item_usefulness.progression },
+  { ID = 2647004, Name = "Deep Jungle",      Usefulness = item_usefulness.progression },
+  { ID = 2647005, Name = "Agrabah",          Usefulness = item_usefulness.progression },
+  { ID = 2647006, Name = "Halloween Town",   Usefulness = item_usefulness.progression },
+  { ID = 2647007, Name = "Atlantica",        Usefulness = item_usefulness.progression },
+  { ID = 2647008, Name = "Neverland",        Usefulness = item_usefulness.progression },
+  { ID = 2647009, Name = "Hollow Bastion",   Usefulness = item_usefulness.progression },
+  { ID = 2647010, Name = "End of the World", Usefulness = item_usefulness.progression },
+  { ID = 2647011, Name = "Monstro",          Usefulness = item_usefulness.progression },
 
   --Trinities
-  { ID = 2648001, Name = "Blue Trinity",   Progression = true },
-  { ID = 2648002, Name = "Red Trinity",    Progression = true },
-  { ID = 2648003, Name = "Green Trinity",  Progression = true },
-  { ID = 2648004, Name = "Yellow Trinity", Progression = true },
-  { ID = 2648005, Name = "White Trinity",  Progression = true },
+  { ID = 2648001, Name = "Blue Trinity",   Usefulness = item_usefulness.progression },
+  { ID = 2648002, Name = "Red Trinity",    Usefulness = item_usefulness.progression },
+  { ID = 2648003, Name = "Green Trinity",  Usefulness = item_usefulness.progression },
+  { ID = 2648004, Name = "Yellow Trinity", Usefulness = item_usefulness.progression },
+  { ID = 2648005, Name = "White Trinity",  Usefulness = item_usefulness.progression },
 
   --Cups
-  { ID = 2649001, Name = "Phil Cup",     Progression = true },
-  { ID = 2649002, Name = "Pegasus Cup",  Progression = true },
-  { ID = 2649003, Name = "Hercules Cup", Progression = true },
-  { ID = 2649004, Name = "Hades Cup",    Progression = true },
+  { ID = 2649001, Name = "Phil Cup",     Usefulness = item_usefulness.progression },
+  { ID = 2649002, Name = "Pegasus Cup",  Usefulness = item_usefulness.progression },
+  { ID = 2649003, Name = "Hercules Cup", Usefulness = item_usefulness.progression },
+  { ID = 2649004, Name = "Hades Cup",    Usefulness = item_usefulness.progression },
 }
     return items
 end
@@ -789,6 +823,27 @@ function receive_items()
     write_check_array(check_array)
 end
 
+function receive_sent_msgs()
+  for i = 0, 5 do
+    local filename = client_communication_path .. "sent" .. tostring(i)
+    if file_exists(filename) then
+      local lines = {}
+      local file = io.open(filename, "r")
+      local line = file:read("*line")
+      while line do
+        table.insert(lines, line)
+        line = file:read("*line")
+      end
+      file:close()
+
+      if message_cache.sentIDs[lines[4]] == nil then
+        table.insert(message_cache.sent, lines)
+      end
+
+    end
+  end
+end
+
 function calculate_full()
     magic_unlocked_bits = {0, 0, 0, 0, 0, 0, 0}
     magic_levels_array  = {0, 0, 0, 0, 0, 0, 0}
@@ -1034,20 +1089,20 @@ function GetKHSCII(INPUT)
     return _returnArray
 end
 
-function get_colour_offset(colour_name)
-  if       colour_name == "red"         then return 0
-    elseif colour_name == "blue"        then return 1
-    elseif colour_name == "green"       then return 2
-    elseif colour_name == "orange"      then return 3
-    elseif colour_name == "lightred"    then return 4
-    elseif colour_name == "lightblue"   then return 5
-    elseif colour_name == "lightgreen"  then return 6
-    elseif colour_name == "lightorange" then return 7
-    elseif colour_name == "white"       then return 8
-    elseif colour_name == "black"       then return 9
-    else return 0
+function usefulness_to_colour(usefulness)
+  if usefulness == item_usefulness.useless then
+    return prompt_colours.green_mint
+  elseif usefulness == item_usefulness.normal then
+    return prompt_colours.red_sora
+  elseif usefulness == item_usefulness.progression then
+    return prompt_colours.purple_evil
+  elseif usefulness == item_usefulness.special then
+    return prompt_colours.red_rose
+  elseif usefulness == item_usefulness.trap then
+    return prompt_colours.red_trap
   end
 end
+
 
 function show_prompt_for_item(item)
   local text_1 = ""
@@ -1057,41 +1112,66 @@ function show_prompt_for_item(item)
   local smallId = item.ID - 2640000
 
   if smallId > 1000 and smallId < 1009 then
-    category = item_categories.consumables
+    category = item_categories.consumable
+  elseif smallId > 1008 and smallId < 1017 then
+    category = item_categories.synthesis
   elseif smallId > 1016 and smallId < 1136 then
     category = item_categories.equipment
   elseif smallId > 2000 and smallId < 4001 then
-    category = item_categories.abilities
+    category = item_categories.ability
   elseif smallId > 4000 and smallId < 5000 then
-    category = item_categories.consumables
-  elseif smallId > 4999 and smallId < 7000 then
-    category = item_categories.magic_trinities_summons
+    category = item_categories.statsUp
+  elseif smallId > 5000 and smallId < 6000 then
+    category = item_categories.summon
+  elseif smallId > 6000 and smallId < 7000 then
+    category = item_categories.magic
   elseif smallId > 8000 and smallId < 9000 then
-    category = item_categories.magic_trinities_summons
-  elseif smallId > 7000  and smallId < 10000 then
-    category = item_categories.unlocks
+    category = item_categories.trinity
+  elseif smallId > 5000 and smallId < 6000 then
+    category = item_categories.summon
+  elseif smallId > 7000 and smallId < 10000 then
+    category = item_categories.unlock
   end
 
-  local colour = "red";
-  if item.Progression then
-    colour = "black"
+  local catUsefulness = item_usefulness.useless
+
+  if category == item_categories.consumable then
+    text_1 = "Consumable"
+    catUsefulness = item_usefulness.useless
+  elseif category == item_categories.synthesis then
+    text_1 = "Synthesis"
+    catUsefulness = item_usefulness.useless
+  elseif category == item_categories.equipment then
+    text_1 = "Equipment"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.ability then
+    text_1 = "Ability"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.statsUp then
+    text_1 = "Stat Up"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.summon then
+    text_1 = "Summon"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.magic then
+    text_1 = "Magic"
+    catUsefulness = item_usefulness.normal
+  elseif category == item_categories.trinity then
+    text_1 = "Trinity"
+    catUsefulness = item_usefulness.progression
+  elseif category == item_categories.unlock then
+    text_1 = "Unlock"
+    catUsefulness = item_usefulness.progression
   end
 
-  --maybe colours when colours are beautiful
-  if category == item_categories.equipment then
-    -- colour = "red"
-    text_1 = "New Equipment"
-  elseif category == item_categories.consumables then
-    -- colour = "green"
-  elseif category == item_categories.unlocks then
-    -- colour = "black"
-    text_1 = "Now Accessible"
-  elseif category == item_categories.abilities then
-    -- colour = "orange"
-    text_1 = "Learned Ability"
-  elseif category == item_categories.magic_trinities_summons then
-    -- colour = "blue"
+  local colour = prompt_colours.red_sora;
+
+  if item.Usefulness == nil then
+    item.Usefulness = catUsefulness
   end
+
+  colour = usefulness_to_colour(item.Usefulness)
+
 
   show_prompt({ text_1 }, text_2, null, colour)
 end
@@ -1111,9 +1191,8 @@ function show_prompt(input_title, input_party, duration, colour)
     for z = 1, 3 do
         local _boxArray = input_party[z];
 
-        local colourOffset = get_colour_offset(colour or "red")
-        local _colorBox  = 0x018408A + 0x10 * colourOffset
-        local _colorText = 0x01840CA + 0x10 * colourOffset
+        local _colorBox  = 0x018408A + colour
+        local _colorText = 0x01840CA + colour
 
         if _boxArray then
             local _textAddress = (_textMemory + 0x70) + (0x140 * (z - 1)) + (0x40 * 0)
@@ -1156,16 +1235,73 @@ function show_prompt(input_title, input_party, duration, colour)
 end
 
 function handle_messages()
-  local item = message_cache.items[1]
-
-  if item ~= nil then
-    show_prompt_for_item(item)
+  local msg = message_cache.items[1]
+  if msg ~= nil then
+    show_prompt_for_item(msg)
     table.remove(message_cache.items, 1)
+    return
   end
 
+  local newSents = {}
+  for i = 1, #message_cache.sent do
+    if not message_cache.sentIDs[message_cache.sent[i][4]] then
+      table.insert(newSents, message_cache.sent[i])
+    end
+  end
+
+
+  msg = newSents[1]
+  if msg ~= nil then
+    if message_cache.sentIDs[msg[4]] == nil then
+      message_cache.sentIDs[msg[4]] = true
+
+      local info = {
+        item = msg[1],
+        reciver = msg[2],
+        usefulness = math.tointeger(msg[3]),
+      }
+
+      --Link's Ocarina
+      local item_msg = tostring(info.reciver);
+      if (string.sub(item_msg, -1) == 's') then
+        item_msg = item_msg .. "'"
+      else
+        item_msg = item_msg .. "'s"
+      end
+      item_msg = item_msg .. ' ' .. info.item
+
+      local usefulness;
+
+      if info.usefulness == 0 then
+        usefulness = item_usefulness.useless
+      elseif info.usefulness == 1 then
+        usefulness = item_usefulness.progression
+      elseif info.usefulness == 2 then
+        usefulness = item_usefulness.normal
+      elseif info.usefulness == 3 then
+        usefulness = item_usefulness.trap
+      end
+
+      ConsolePrint('use multiwork ' .. info.usefulness)
+      local colour = usefulness_to_colour(usefulness)
+
+      show_prompt({ "Multiworld" }, { { item_msg } }, null, colour)
+      return
+    end
+
+    -- local debugmsg = message_cache.debug[1]
+    -- if debugmsg ~= nil then
+    --   show_prompt({ 'debug' }, {{'Colouroffset: ' .. tostring(colourOffsetIterator)}}, null, colourOffsetIterator)
+    --   -- table.remove(message_cache.debug, 1) -- show forever
+    --   colourOffsetIterator = colourOffsetIterator + 4
+    --   return
+    -- end
+    --
+  end
 end
 
 function main()
+    receive_sent_msgs()
     receive_items()
     victory = calculate_full()
     send_locations(victory)
