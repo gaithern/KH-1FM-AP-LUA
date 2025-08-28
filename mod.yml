@@ -1,6 +1,6 @@
 title: KH1FM Archipelago Companion
 originalAuthor: Gicu
-description: Necessary files for KH1FM Archipelago Randomizer.  Credits to denhonator for the original randomizer, TopazTK for the show prompt message, Krujo for show prompt's AP implemention, Sonicshadowsilver2 for so many things, JaredWeakStrike for code formatting and testcases, and RavSpect for the title image edit.
+description: This version of KH1 AP is no longer being developed/supported.  Please check kh1fmrando.com for the updated apworld and further updates until changes are migrated archipelago.gg
 assets:
 #Lua Script
 - name: scripts/1fmAPConnector.lua
