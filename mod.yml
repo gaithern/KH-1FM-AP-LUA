@@ -1,6 +1,6 @@
 title: KH1FM Archipelago Companion
 originalAuthor: Gicu
-description: This version of KH1 AP is no longer being developed/supported.  Please check kh1fmrando.com for the updated apworld and further updates until changes are migrated archipelago.gg
+description: STOP!  This mod is no longer required and is bundled with your generated mod!  You should only be using this if you're playing a legacy game!
 assets:
 #Lua Script
 - name: scripts/1fmAPConnector.lua
